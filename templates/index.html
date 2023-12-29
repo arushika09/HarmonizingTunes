@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Recommendation System</title>
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png" sizes="96x96">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+   
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center mt-5">Song Recommendation System</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <form action="/" method="post" class="form-inline justify-content-center mt-4">
+                    <div class="form-group mb-2">
+                        <label for="song" class="sr-only">Song Name</label>
+                        <input type="text" class="form-control" id="song" name="song" placeholder="Enter a Song Name" required>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="number" class="sr-only">Number of Recommendations</label>
+                        <input type="number" class="form-control" id="number" name="number" placeholder="Number of Recommendations" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2" id="submit-btn">Get Recommendations</button>
+                </form>
+                {% if message %}
+                    <p>{{ message }}</p>
+                {% endif %}
+                {% if formatted_songs %}
+                    <div class="recommendations mt-5">
+                        <h2 class="text-center">Recommendations</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Song Name</th>
+                                    <th>Artists</th>
+                                    <th>Year</th>
+                                    <th>Genre</th>
+                                    <th>Listen Now</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for song in formatted_songs %}
+                                <tr>
+                                    <td>{{ song.name }}</td>
+                                    <td>{{ song.artists }}</td>
+                                    <td>{{ song.year }}</td>
+                                    <td>{{ song.genres }}</td>
+                                    <td class="text-center"><a href="https://open.spotify.com/track/{{ song.track_id }}" target="_blank"><img width="30" height="30" src="https://img.icons8.com/fluency/140/spotify.png" alt="spotify"/></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
